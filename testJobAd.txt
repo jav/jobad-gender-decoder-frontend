@@ -1,0 +1,47 @@
+Position: Billing System Engineer, Commercial Systems at XYZ Corporation
+
+This engineering opportunity caters to individuals with a strong inclination towards Linux, offering a chance to thrive within the dynamic environment of XYZ Corporation. If you possess a passion for open source development, you'll find yourself among exceptional peers, driving innovation and success.
+
+Within the Commercial Systems division, multiple areas of focus span six engineering teams, collaborating closely with various departments at XYZ Corporation. Salesforce serves as a pivotal component in the business framework, with the Commercial Systems unit actively involved in its optimization.
+
+The primary objective of the Billing team is to create an internal billing system ensuring consistent billing experiences across all products and services for XYZ Corporation's clientele. This challenging task necessitates seamless coordination with business units to guarantee precise and reliable billing, while upholding the rigorous engineering standards synonymous with XYZ Corporation.
+
+We welcome candidates at all levels of seniority who are dedicated to delivering top-tier engineering solutions, continually honing their skills, and contributing to a unique billing and finance solution.
+
+Location: Remote position within the EMEA region.
+
+A Typical Day:
+
+- Developing engineering solutions utilizing Go or Python.
+- Collaborating with team members on technical designs and conducting code reviews.
+- Deploying and managing services developed by the team.
+- Identifying opportunities for enhancements in engineering and operational practices.
+
+What We Seek:
+
+- Proficiency as a software developer, preferably in high-level languages such as Go or Python.
+- Experience in constructing, deploying, and maintaining distributed systems and APIs.
+- Strong verbal and written communication skills in English.
+- Ability to effectively collaborate remotely with diverse teams and stakeholders while maintaining high levels of motivation, productivity, and organization in a fully remote setup.
+- Willingness to travel internationally for short durations, approximately 2-4 times per year.
+
+Desirable Skills:
+
+- Familiarity with Salesforce, NetSuite, or Stripe APIs.
+- Background in business roles such as sales, finance, or operations.
+- Bachelor's degree or equivalent in Computer Science or a related engineering field.
+
+What We Offer:
+
+- Competitive base pay tailored to factors including geographic location, experience, knowledge, and skills.
+- Additional benefits and rewards such as annual bonuses and sales incentives for certain roles.
+- Fully remote working environment with various additional benefits reflecting our values and ideals.
+- Personal learning and development budget, annual compensation review, recognition rewards, parental leave, and employee assistance program.
+- Opportunity to travel to new locations for team meetings.
+- Priority pass for travel and upgrades for long-haul company events.
+
+About XYZ Corporation:
+
+XYZ Corporation is a pioneering tech firm leading the global transition to open source. As the publisher of Ubuntu, a key open-source project powering AI, IoT, and the cloud, we drive significant change daily. Operating on a global scale, we set high standards for our workforce, expecting excellence in all endeavors.
+
+Established as a remote-first company in 2004, working at XYZ Corporation offers a glimpse into the future, challenging individuals to innovate, learn, and excel. We promote a workplace free from discrimination, valuing diversity to foster a better environment and produce superior products. Whatever your background, we welcome your application and promise fair consideration in our recruitment process.

@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/jobad-gender-decoder-frontend/static/css/main.0d2b5389.css",
+    "main.js": "/jobad-gender-decoder-frontend/static/js/main.38133c92.js",
+    "static/js/453.d855a71b.chunk.js": "/jobad-gender-decoder-frontend/static/js/453.d855a71b.chunk.js",
+    "index.html": "/jobad-gender-decoder-frontend/index.html",
+    "main.0d2b5389.css.map": "/jobad-gender-decoder-frontend/static/css/main.0d2b5389.css.map",
+    "main.38133c92.js.map": "/jobad-gender-decoder-frontend/static/js/main.38133c92.js.map",
+    "453.d855a71b.chunk.js.map": "/jobad-gender-decoder-frontend/static/js/453.d855a71b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0d2b5389.css",
+    "static/js/main.38133c92.js"
+  ]
+}

@@ -9,7 +9,7 @@ import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
 import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
-import { Button, Paper } from '@mui/material';
+import { Button, Paper, TextField } from '@mui/material';
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
@@ -20,6 +20,8 @@ function App() {
   const [jobAdFeedback, setJobAdFeedback] = useState("No feedback yet...")
   const [femenineWordCount, setFemenineWordCount] = useState(0)
   const [masculineWordCount, setMasculineWordCount] = useState(0)
+  const [debug, setDebug] = useState(false)
+  const [feedbackPrompt, setFeedbackPrompt] = useState("")
 
   const jobAdInputChanged = (s: string) => {
     setJobAdInputText(() => s)
@@ -48,6 +50,18 @@ function App() {
     }
   }
 
+  const toggleDebug = async () => {
+    setDebug(!debug)
+    const getPromptResponse: { prompt: string } = await fetch(REACT_APP_BACKEND_URL + "/getPrompt", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+    setFeedbackPrompt(() => getPromptResponse["prompt"])
+  }
+
   return (
     <Container>
       <Paper sx={{ mx: 8, my: 4, padding: 2 }}>
@@ -59,6 +73,17 @@ function App() {
           <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
           <JobAdFeedback value={jobAdFeedback} />
           <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
+          {process.env.NODE_ENV === "development" ?
+            <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }}
+              variant="outlined"
+              onClick={() => toggleDebug()}>
+              Toggle Debug
+            </Button> : null
+          }
+          {debug ?
+            <TextField>{feedbackPrompt}</TextField>
+            : null}
+
         </Box>
       </Paper>
     </Container>

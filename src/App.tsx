@@ -5,9 +5,11 @@ import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
 import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
 
+const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+
+
 function App() {
 
-  const backendUrl = "http://localhost:3300"
 
   const [jobAdInputText, setJobAdInputText] = useState("Insert job ad here...")
   const [feedbackSubmissionSuccess, setFeedbackSubmissionSuccess] = useState("No info")
@@ -23,7 +25,7 @@ function App() {
 
   const getFeedbackOnJobAd = async () => {
     try {
-      const res = await fetch(backendUrl + "/getFeedbackOnJobAd", {
+      const res = await fetch(REACT_APP_BACKEND_URL + "/getFeedbackOnJobAd", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

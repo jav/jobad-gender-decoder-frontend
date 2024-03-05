@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
 import './App.css';
@@ -9,7 +8,7 @@ import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
 import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
-import { Button, Paper, TextField } from '@mui/material';
+import { Button, Card, Paper, TextField } from '@mui/material';
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
@@ -98,24 +97,51 @@ function App() {
 
   return (
     <Container>
-      <Paper sx={{ mx: 8, my: 4, padding: 2 }}>
-        <Box sx={{ mx: 2, my: 4 }}>
-          <Typography variant="h4" component="h1" sx={{ mb: 2 }}>Job Ad Gender Decoder</Typography>
+      <Paper sx={{ mx: 8, my: 4, padding: 4, alignContent: "center" }}>
+        <Typography variant="h2" component="h1" sx={{ mb: 2, }}>📝 Job Ad Gender Decoder ♀️/♂️</Typography>
+
+        <Container>
+
           <Typography variant="body1" sx={{ mb: 2 }}>This tool will help you to write job ads that are welcoming to any gender! </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>Paste your job ad text into the box below and click "Get Feedback!" to get started! </Typography>
-          <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
-          <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
-          {debug ? <Button variant="outlined" onClick={() => loadTestJobAd()}>Load test Job Ad</Button> : null}
-          <JobAdFeedback value={jobAdFeedback} />
-          <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
-          {process.env.NODE_ENV === "development" ?
+        </Container>
+
+
+        <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
+        <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
+        {debug ? <Button variant="outlined" onClick={() => loadTestJobAd()}>Load test Job Ad</Button> : null}
+        <JobAdFeedback value={jobAdFeedback} />
+        <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
+        <Card sx={{ padding: 2 }}>
+          <Typography variant="h6" component="h1">Credit</Typography>
+          <Typography variant="body1">The tool is based on the research of Danielle Gaucher, Justin Friesen, and Aaron C. Kay. <br />
+            The software implementation is based
+            on <Link href="https://gender-decoder.katmatfield.com/" target="_blank">Gender Decoder</Link> created
+            by <Link href="https://github.com/lovedaybrooke" target="_blank">Kat Matfield</Link> <br />
+            Thank you! 🙏
+          </Typography>
+        </Card>
+        <Card sx={{ padding: 2 }}>
+          <Typography variant="h6" component="h1">Feedback about this tool</Typography>
+          <Typography variant="body1">Please reach out to me for any feedback about this tool! <br />
+
+            <Link href="https://www.linkedin.com/in/javierubillos" target="_blank">Linked In</Link> <br />
+            Email: <Link href="mailto:javier@ubillos.com" target="_blank">javier@ubillos.org</Link> <br />
+            Github:             <Link href="https://github.com/jav" target="_blank">@jav</Link> <br />
+            <br />
+            You'll also welcome to <Link href="https://github.com/jav/jobad-gender-decoder">the source of this tool</Link>!
+          </Typography>
+        </Card>
+        {
+          process.env.NODE_ENV === "development" ?
             <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }}
               variant="outlined"
               onClick={() => toggleDebug()}>
               Toggle Debug
             </Button> : null
-          }
-          {debug ?
+        }
+        {
+          debug ?
             <Container>
               <TextField
                 value={feedbackPromptOverride}
@@ -124,11 +150,10 @@ function App() {
               />
               <Button onClick={() => resetPromptOverride()}>Reset</Button>
             </Container>
-            : null}
-
-        </Box>
-      </Paper>
-    </Container>
+            : null
+        }
+      </Paper >
+    </Container >
   );
 }
 

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
+import JobAdInput from './JobAdInput';
+import JobAdFeedback from './JobAdFeedback';
+import Bias from './Bias';
+import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
 
 function App() {
 
@@ -8,6 +12,14 @@ function App() {
   const [jobAdInputText, setJobAdInputText] = useState("Insert job ad here...")
   const [feedbackSubmissionSuccess, setFeedbackSubmissionSuccess] = useState("No info")
   const [jobAdFeedback, setJobAdFeedback] = useState("No feedback yet...")
+  const [femenineWordCount, setFemenineWordCount] = useState(0)
+  const [masculineWordCount, setMasculineWordCount] = useState(0)
+
+  const jobAdInputChanged = (s: string) => {
+    setJobAdInputText(() => s)
+    setFemenineWordCount(() => countFemenineWords(s))
+    setMasculineWordCount(() => countMasculineWords(s))
+  }
 
   const getFeedbackOnJobAd = async () => {
     try {
@@ -28,14 +40,14 @@ function App() {
       console.log(error)
       setFeedbackSubmissionSuccess("Error")
     }
-
   }
 
   return (
     <div className="App">
-      <textarea className="JobAdInput" cols={100} rows={20} value={jobAdInputText} onChange={e => setJobAdInputText(e.target.value)}></textarea>
+      <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
       <button className="GetFeedbackOnJobAd" onClick={getFeedbackOnJobAd}>Get feedback on ad</button><span>{feedbackSubmissionSuccess}</span>
-      <textarea className="JobAdOutput" readOnly={true} cols={100} rows={20} value={jobAdFeedback}></textarea>
+      <JobAdFeedback value={jobAdFeedback} />
+      <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
     </div>
   );
 }

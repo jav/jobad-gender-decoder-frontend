@@ -1,4 +1,4 @@
-import { TextareaAutosize } from '@mui/base';
+import TextField from '@mui/material/TextField';
 
 interface JobAdFeedbackProps {
     value: string
@@ -7,14 +7,18 @@ interface JobAdFeedbackProps {
 const JobAdFeedback = ({ value }: JobAdFeedbackProps) => {
 
     return (
-        <div>
-            <TextareaAutosize
-                value={value} readOnly={true}
-                minRows={10}
-                maxRows={50}
-                placeholder="Insert job ad here..."
-            ></TextareaAutosize>
-        </div>
+        <TextField
+            fullWidth={true}
+            value={value}
+            InputProps={{
+                readOnly: true,
+            }}
+            label="Job ad gender bias feedback"
+            minRows={6}
+            maxRows={30}
+            multiline={true}
+            placeholder="No feedback yet!"
+        ></TextField>
     )
 }
 

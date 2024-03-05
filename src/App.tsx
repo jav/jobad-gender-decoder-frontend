@@ -7,9 +7,7 @@ import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
-
 function App() {
-
 
   const [jobAdInputText, setJobAdInputText] = useState("Insert job ad here...")
   const [feedbackSubmissionSuccess, setFeedbackSubmissionSuccess] = useState("No info")

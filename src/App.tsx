@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+
 import './App.css';
 import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
@@ -43,12 +48,15 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
-      <button className="GetFeedbackOnJobAd" onClick={getFeedbackOnJobAd}>Get feedback on ad</button><span>{feedbackSubmissionSuccess}</span>
-      <JobAdFeedback value={jobAdFeedback} />
-      <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
-    </div>
+    <Container maxWidth="sm">
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>Job Ad Gender Decoder</Typography>
+          <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
+          <button className="GetFeedbackOnJobAd" onClick={getFeedbackOnJobAd}>Get feedback on ad</button><span>{feedbackSubmissionSuccess}</span>
+          <JobAdFeedback value={jobAdFeedback} />
+          <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
+      </Box>
+    </Container>
   );
 }
 

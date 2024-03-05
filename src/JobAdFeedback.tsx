@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { TextareaAutosize } from '@mui/base';
 
 interface JobAdFeedbackProps {
     value: string
@@ -8,7 +8,12 @@ const JobAdFeedback = ({ value }: JobAdFeedbackProps) => {
 
     return (
         <div>
-            <textarea value={value} readOnly={true}></textarea>
+            <TextareaAutosize
+                value={value} readOnly={true}
+                minRows={10}
+                maxRows={50}
+                placeholder="Insert job ad here..."
+            ></TextareaAutosize>
         </div>
     )
 }

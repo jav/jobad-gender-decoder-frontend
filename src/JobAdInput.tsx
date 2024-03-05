@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { TextareaAutosize } from '@mui/base';
 
 interface JobAdInputProps {
     value: string
@@ -9,9 +9,12 @@ const JobAdInput = ({ value, onChange }: JobAdInputProps) => {
 
     return (
         <div>
-            <textarea
-                value={value} onChange={e => onChange(e.target.value)}  
-                rows={10} cols={100}></textarea>
+            <TextareaAutosize
+                value={value} onChange={e => onChange(e.target.value)}
+                minRows={10}
+                maxRows={50}
+                placeholder="Insert job ad here..."
+            ></TextareaAutosize>
         </div>
     )
 }

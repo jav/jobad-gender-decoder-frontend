@@ -14,7 +14,7 @@ const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
 function App() {
 
-  const [jobAdInputText, setJobAdInputText] = useState("Insert job ad here...")
+  const [jobAdInputText, setJobAdInputText] = useState("")
   const [feedbackSubmissionSuccess, setFeedbackSubmissionSuccess] = useState("No info")
   const [jobAdFeedback, setJobAdFeedback] = useState("No feedback yet...")
   const [femenineWordCount, setFemenineWordCount] = useState(0)

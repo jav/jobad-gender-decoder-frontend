@@ -9,6 +9,7 @@ import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
 import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
+import { Paper } from '@mui/material';
 
 const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
@@ -48,14 +49,18 @@ function App() {
   }
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>Job Ad Gender Decoder</Typography>
+    <Container>
+      <Paper sx={{ mx: 8, my: 4, padding: 2 }}>
+        <Box sx={{ mx: 2, my: 4 }}>
+          <Typography variant="h4" component="h1" sx={{ mb: 2 }}>Job Ad Gender Decoder</Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>This tool will help you to write job ads that are welcoming to any gender! </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>Paste your job ad text into the box below and click "Get Feedback!" to get started! </Typography>
           <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
           <button className="GetFeedbackOnJobAd" onClick={getFeedbackOnJobAd}>Get feedback on ad</button><span>{feedbackSubmissionSuccess}</span>
           <JobAdFeedback value={jobAdFeedback} />
           <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
-      </Box>
+        </Box>
+      </Paper>
     </Container>
   );
 }

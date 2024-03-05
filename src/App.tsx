@@ -21,10 +21,14 @@ function App() {
   const [femenineWordCount, setFemenineWordCount] = useState(0)
   const [masculineWordCount, setMasculineWordCount] = useState(0)
   const [debug, setDebug] = useState(false)
-  const [feedbackPrompt, setFeedbackPrompt] = useState("")
+  const [feedbackPromptOverride, setFeedbackPromptOverride] = useState("")
 
   const jobAdInputChanged = (s: string) => {
     setJobAdInputText(() => s)
+    updateBias(s)
+  }
+
+  const updateBias = (s: string) => {
     setFemenineWordCount(() => countFemenineWords(s))
     setMasculineWordCount(() => countMasculineWords(s))
   }
@@ -37,7 +41,8 @@ function App() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          jobAd: jobAdInputText
+          jobAd: jobAdInputText,
+          promptOverride: feedbackPromptOverride
         })
       })
       const data = await res.json()
@@ -51,15 +56,44 @@ function App() {
   }
 
   const toggleDebug = async () => {
-    setDebug(!debug)
-    const getPromptResponse: { prompt: string } = await fetch(REACT_APP_BACKEND_URL + "/getPrompt", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
+    setDebug(() => !debug)
+  }
+
+  const resetPromptOverride = async () => {
+    try {
+      const res = await fetch(REACT_APP_BACKEND_URL + "/getPrompt", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      if (!res.ok) {
+        console.log("⚠️ Backend does not supporting debug-mode.")
+        setFeedbackPromptOverride("⚠️ Backend does not supporting debug-mode.")
+        return
       }
-    })
-      .then(res => res.json())
-    setFeedbackPrompt(() => getPromptResponse["prompt"])
+      const data = await res.json()
+      console.log(data)
+      setFeedbackPromptOverride(data.prompt)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const updatePromptOverride = (s: string) => {
+    setFeedbackPromptOverride(s)
+  }
+
+  const loadTestJobAd = async () => {
+    try {
+      const textJobAdText = await fetch("/testJobAd.txt").then(r => r.text())
+      setJobAdInputText(() => textJobAdText)
+      updateBias(textJobAdText)
+
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -71,6 +105,7 @@ function App() {
           <Typography variant="body1" sx={{ mb: 2 }}>Paste your job ad text into the box below and click "Get Feedback!" to get started! </Typography>
           <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
           <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
+          {debug ? <Button variant="outlined" onClick={() => loadTestJobAd()}>Load test Job Ad</Button> : null}
           <JobAdFeedback value={jobAdFeedback} />
           <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
           {process.env.NODE_ENV === "development" ?
@@ -81,7 +116,14 @@ function App() {
             </Button> : null
           }
           {debug ?
-            <TextField>{feedbackPrompt}</TextField>
+            <Container>
+              <TextField
+                value={feedbackPromptOverride}
+                onChange={(e) => updatePromptOverride(e.target.value)}
+                multiline={true}
+              />
+              <Button onClick={() => resetPromptOverride()}>Reset</Button>
+            </Container>
             : null}
 
         </Box>

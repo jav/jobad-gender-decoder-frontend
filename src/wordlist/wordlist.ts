@@ -18,25 +18,18 @@ export const findWords = (text: string, codedWordList: string[], neutralWordList
 }
 
 const findWord = (text: string, word: string, neutralWordList: string[]): FoundWord[] => {
-    let regex = new RegExp(`[^A-Za-z0-9]?${word}[A-Za-z]*`, "ig")
-    const matchesIterator = text.matchAll(regex)
+    const regexForFirstWord = `^[^A-Za-z0-9]?${word}[A-Za-z]*`
+    const regexForAllOtherWords = `[^!-~][^A-Za-z0-9]?${word}[A-Za-z]*`
+
+    const combinedRegex = new RegExp(`${regexForFirstWord}|${regexForAllOtherWords}`, "ig")
+    const matchesIterator = text.matchAll(combinedRegex)
     const matches = Array.from(matchesIterator)
 
-    /*     for (const match of matches) {
-            if (match.index === undefined) {
-                console.log("match.index is undefined")
-            } else {
-                console.log(
-                    `Found ${match[0]} start=${match.index} end=${match.index + match[0].length
-                    }.`,
-                )
-            }
-        } */
-
     const filteredMatches = matches.filter(m => filterNeutralWords(m[0], neutralWordList))
-    console.log(`filteredMatches: ${filteredMatches}`)
-    return filteredMatches.map(
-        m => ({ word: m[0], sentence: getSentenceOfFoundWord(matchToFoundWord(m), text), index: m.index || -1 })
+    const matchingFoundWords = filteredMatches.map(matchToFoundWord)
+    const trimmedMatchingFoundWords = matchingFoundWords.map(w => ({ ...w, word: w.word.trim() }))
+    return trimmedMatchingFoundWords.map(
+        w => ({ ...w, sentence: getSentenceOfFoundWord(w, text) })
     )
 }
 
@@ -78,7 +71,7 @@ export const getSentenceOfFoundWord = (foundWord: FoundWord, text: string): stri
             break
         }
     }
-
-    return text.substring(prevMatchIndex + 1, nextMatchIndex)
-
+    const foundSentence = text.substring(prevMatchIndex + 1, nextMatchIndex).trim()
+    console.log(`For word ${foundWord.word}, the sentence found is ${foundSentence}`)
+    return foundSentence
 }

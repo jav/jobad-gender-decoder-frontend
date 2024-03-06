@@ -11,8 +11,9 @@ import './App.css';
 import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
-import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
+import { countFemenineWords, countMasculineWords, findFemenineWords, findMasculineWords, getSentenceOfFoundWord } from './wordlist/wordlist';
 import conf from './config/config'
+import FoundWord from './types/FoundWord';
 
 
 const API_BASE_URL = conf.API_BASE_URL
@@ -24,7 +25,8 @@ function App() {
   const [jobAdFeedback, setJobAdFeedback] = useState("No feedback yet...")
   const [femenineWordCount, setFemenineWordCount] = useState(0)
   const [masculineWordCount, setMasculineWordCount] = useState(0)
-  const [debug, setDebug] = useState(false)
+  const [femenineWordsFound, setFemenineWordsFound] = useState<FoundWord[]>([])
+  const [masculineWordsFound, setMasculineWordsFound] = useState<FoundWord[]>([])
   const [feedbackPromptOverride, setFeedbackPromptOverride] = useState("")
 
   const jobAdInputChanged = (s: string) => {
@@ -35,6 +37,8 @@ function App() {
   const updateBias = (s: string) => {
     setFemenineWordCount(() => countFemenineWords(s))
     setMasculineWordCount(() => countMasculineWords(s))
+    setFemenineWordsFound(() => findFemenineWords(s))
+    setMasculineWordsFound(() => findMasculineWords(s))
   }
 
   const getFeedbackOnJobAd = async () => {
@@ -46,7 +50,8 @@ function App() {
         },
         body: JSON.stringify({
           jobAd: jobAdInputText,
-          promptOverride: feedbackPromptOverride
+          femenineWordsFound: femenineWordsFound.map(w => ({sentence: getSentenceOfFoundWord(w, jobAdInputText), word: w.word})),
+          masculineWordsFound: masculineWordsFound.map(w => ({sentence: getSentenceOfFoundWord(w, jobAdInputText), word: w.word})),
         })
       })
       const data = await res.json()
@@ -57,10 +62,6 @@ function App() {
       console.log(error)
       setFeedbackSubmissionSuccess("Error")
     }
-  }
-
-  const toggleDebug = async () => {
-    setDebug(() => !debug)
   }
 
   const resetPromptOverride = async () => {
@@ -114,9 +115,11 @@ function App() {
 
         <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
         <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
-        {debug ? <Button variant="outlined" onClick={() => loadTestJobAd()}>Load test Job Ad</Button> : null}
         <JobAdFeedback value={jobAdFeedback} />
-        <Bias femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount} />
+        <Bias
+          femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount}
+          femenineWordsFound={femenineWordsFound} masculineWordsFound={masculineWordsFound}
+        />
         <Card sx={{ padding: 2 }}>
           <Typography variant="h6" component="h1">Credit</Typography>
           <Typography variant="body1">The tool is based on the research of Danielle Gaucher, Justin Friesen, and Aaron C. Kay. <br />
@@ -132,31 +135,11 @@ function App() {
 
             <Link href="https://www.linkedin.com/in/javierubillos" target="_blank">Linked In</Link> <br />
             Email: <Link href="mailto:javier@ubillos.com" target="_blank">javier@ubillos.org</Link> <br />
-            Github:             <Link href="https://github.com/jav" target="_blank">@jav</Link> <br />
+            Github: <Link href="https://github.com/jav" target="_blank">@jav</Link> <br />
             <br />
             You'll also welcome to <Link href="https://github.com/jav/jobad-gender-decoder">the source of this tool</Link>!
           </Typography>
         </Card>
-        {
-          process.env.NODE_ENV === "development" ?
-            <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }}
-              variant="outlined"
-              onClick={() => toggleDebug()}>
-              Toggle Debug
-            </Button> : null
-        }
-        {
-          debug ?
-            <Container>
-              <TextField
-                value={feedbackPromptOverride}
-                onChange={(e) => updatePromptOverride(e.target.value)}
-                multiline={true}
-              />
-              <Button onClick={() => resetPromptOverride()}>Reset</Button>
-            </Container>
-            : null
-        }
       </Paper >
     </Container >
   );

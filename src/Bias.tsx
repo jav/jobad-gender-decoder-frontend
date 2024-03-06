@@ -1,18 +1,35 @@
-import { Container, Paper, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Container, Paper, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { FoundWord } from './types/FoundWord';
+import FoundWords from './FoundWords';
 
 interface BiasProps {
-    masculineWordCount: number
     femenineWordCount: number
+    masculineWordCount: number
+    femenineWordsFound: FoundWord[]
+    masculineWordsFound: FoundWord[]
 }
-
-const Bias = (props: BiasProps) => {
-    const { masculineWordCount, femenineWordCount } = props
+const Bias = ({ femenineWordCount, masculineWordCount, femenineWordsFound, masculineWordsFound }: BiasProps) => {
 
     return (
-        <Paper sx={{ display: "flex", flexDirection: "row", my: 4, padding:4 }}>
+        <Paper sx={{ display: "flex", flexDirection: "row", my: 4, padding: 4 }}>
             <Container>
-                <Typography variant="h6">Femenine word count: {femenineWordCount}</Typography>
-                <Typography variant="h6">Masculine word count: {masculineWordCount}</Typography>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}                     >
+                        <Typography variant="h6">Femenine word count: {femenineWordsFound.length}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <FoundWords wordsFound={femenineWordsFound} />
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography variant="h6">Masculine word count: {masculineWordsFound.length}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <FoundWords wordsFound={masculineWordsFound} />
+                    </AccordionDetails>
+                </Accordion>
             </Container>
             <Container>
                 <Typography variant="body1">Recommendation: Keep the masculine word count low.</Typography>
@@ -21,7 +38,7 @@ const Bias = (props: BiasProps) => {
                     A high femenine count has a negligable impact on male applicants.
                 </Typography>
             </Container>
-        </Paper>
+        </Paper >
     )
 }
 

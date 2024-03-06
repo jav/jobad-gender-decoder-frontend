@@ -12,9 +12,10 @@ import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
 import { countFemenineWords, countMasculineWords } from './wordlist/wordlist';
+import conf from './config/config'
 
 
-const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+const API_BASE_URL = conf.API_BASE_URL
 
 function App() {
 
@@ -38,7 +39,7 @@ function App() {
 
   const getFeedbackOnJobAd = async () => {
     try {
-      const res = await fetch(REACT_APP_BACKEND_URL + "/getFeedbackOnJobAd", {
+      const res = await fetch(API_BASE_URL + "/getFeedbackOnJobAd", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -64,7 +65,7 @@ function App() {
 
   const resetPromptOverride = async () => {
     try {
-      const res = await fetch(REACT_APP_BACKEND_URL + "/getPrompt", {
+      const res = await fetch(API_BASE_URL + "/getPrompt", {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

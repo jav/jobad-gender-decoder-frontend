@@ -10,12 +10,10 @@ import { FoundWord } from './types/FoundWord';
 import FoundWords from './FoundWords';
 
 interface BiasProps {
-    femenineWordCount: number
-    masculineWordCount: number
     femenineWordsFound: FoundWord[]
     masculineWordsFound: FoundWord[]
 }
-const Bias = ({ femenineWordCount, masculineWordCount, femenineWordsFound, masculineWordsFound }: BiasProps) => {
+const Bias = ({ femenineWordsFound, masculineWordsFound }: BiasProps) => {
 
     return (
         <Paper sx={{ display: "flex", flexDirection: "row", my: 4, padding: 4 }}>

@@ -50,29 +50,6 @@ const filterNeutralWords = (word: string, neutralWordList: string[]): boolean =>
         .reduce((acc: boolean, curr: boolean) => acc || curr, false)
 }
 
-
-
-export const countMasculineWords = (text: string): number => {
-    const words = textToWords(text.toLowerCase())
-    return filterMasculineWords(words).length
-}
-
-export const countFemenineWords = (text: string): number => {
-    const words = textToWords(text.toLowerCase())
-    return matchWordWithFemenineWordList(words).length
-}
-
-const textToWords = (text: string): string[] => {
-    return text.replace(/[^ -~]+/g, " ").split(" ")
-}
-
-const filterMasculineWords = (words: string[]): string[] => {
-    return words.map(word => matchWordWithCodedWordList(word, masculineWordList, nonCodedWordList)).filter(word => word.length > 0)
-}
-
-const matchWordWithFemenineWordList = (words: string[]): string[] => {
-    return words.map(word => matchWordWithCodedWordList(word, femenineWordList, nonCodedWordList)).filter(word => word.length > 0)
-}
 const matchWordWithCodedWordList = (word: string, codedWordList: string[], neutralWordList: string[]): string => {
     if (neutralWordList.includes(word)) {
         return ""
@@ -95,7 +72,7 @@ export const getSentenceOfFoundWord = (foundWord: FoundWord, text: string): stri
         if (match.index === undefined) continue
         if (foundWord.index > match.index) {
             { prevMatchIndex = match.index }
-        } 
+        }
         if (foundWord.index < match.index) {
             { nextMatchIndex = match.index }
             break

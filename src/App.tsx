@@ -10,7 +10,7 @@ import './App.css';
 import JobAdInput from './JobAdInput';
 import JobAdFeedback from './JobAdFeedback';
 import Bias from './Bias';
-import { countFemenineWords, countMasculineWords, findFemenineWords, findMasculineWords, getSentenceOfFoundWord } from './wordlist/wordlist';
+import { findFemenineWords, findMasculineWords, getSentenceOfFoundWord } from './wordlist/wordlist';
 import conf from './config/config'
 import FoundWord from './types/FoundWord';
 
@@ -22,11 +22,8 @@ function App() {
   const [jobAdInputText, setJobAdInputText] = useState("")
   const [feedbackSubmissionSuccess, setFeedbackSubmissionSuccess] = useState("No info")
   const [jobAdFeedback, setJobAdFeedback] = useState("No feedback yet...")
-  const [femenineWordCount, setFemenineWordCount] = useState(0)
-  const [masculineWordCount, setMasculineWordCount] = useState(0)
   const [femenineWordsFound, setFemenineWordsFound] = useState<FoundWord[]>([])
   const [masculineWordsFound, setMasculineWordsFound] = useState<FoundWord[]>([])
-  const [feedbackPromptOverride, setFeedbackPromptOverride] = useState("")
 
   const jobAdInputChanged = (s: string) => {
     setJobAdInputText(() => s)
@@ -34,8 +31,6 @@ function App() {
   }
 
   const updateBias = (s: string) => {
-    setFemenineWordCount(() => countFemenineWords(s))
-    setMasculineWordCount(() => countMasculineWords(s))
     setFemenineWordsFound(() => findFemenineWords(s))
     setMasculineWordsFound(() => findMasculineWords(s))
   }
@@ -49,8 +44,8 @@ function App() {
         },
         body: JSON.stringify({
           jobAd: jobAdInputText,
-          femenineWordsFound: femenineWordsFound.map(w => ({sentence: getSentenceOfFoundWord(w, jobAdInputText), word: w.word})),
-          masculineWordsFound: masculineWordsFound.map(w => ({sentence: getSentenceOfFoundWord(w, jobAdInputText), word: w.word})),
+          femenineWordsFound: femenineWordsFound.map(w => ({ sentence: getSentenceOfFoundWord(w, jobAdInputText), word: w.word })),
+          masculineWordsFound: masculineWordsFound.map(w => ({ sentence: getSentenceOfFoundWord(w, jobAdInputText), word: w.word })),
         })
       })
       const data = await res.json()
@@ -63,37 +58,11 @@ function App() {
     }
   }
 
-  const resetPromptOverride = async () => {
-    try {
-      const res = await fetch(API_BASE_URL + "/getPrompt", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      if (!res.ok) {
-        console.log("⚠️ Backend does not supporting debug-mode.")
-        setFeedbackPromptOverride("⚠️ Backend does not supporting debug-mode.")
-        return
-      }
-      const data = await res.json()
-      console.log(data)
-      setFeedbackPromptOverride(data.prompt)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const updatePromptOverride = (s: string) => {
-    setFeedbackPromptOverride(s)
-  }
-
   const loadTestJobAd = async () => {
     try {
       const textJobAdText = await fetch("/testJobAd.txt").then(r => r.text())
       setJobAdInputText(() => textJobAdText)
       updateBias(textJobAdText)
-
     }
     catch (error) {
       console.log(error)
@@ -116,7 +85,6 @@ function App() {
         <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
         <JobAdFeedback value={jobAdFeedback} />
         <Bias
-          femenineWordCount={femenineWordCount} masculineWordCount={masculineWordCount}
           femenineWordsFound={femenineWordsFound} masculineWordsFound={masculineWordsFound}
         />
         <Card sx={{ padding: 2 }}>

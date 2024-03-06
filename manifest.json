@@ -1,6 +1,6 @@
 {
-  "short_name": "Job Ad Gender Bias",
-  "name": "Job Ad Gender Bias",
+  "short_name": "Job Ad Gender Bias Decoder",
+  "name": "Job Ad Gender Bias Decoder",
   "icons": [
     {
       "src": "favicon.ico",

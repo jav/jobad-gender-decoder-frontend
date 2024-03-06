@@ -1,5 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary, Container, Paper, Typography } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Container from '@mui/material/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+
 import { FoundWord } from './types/FoundWord';
 import FoundWords from './FoundWords';
 

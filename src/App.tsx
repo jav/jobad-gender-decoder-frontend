@@ -13,6 +13,7 @@ import Bias from './Bias';
 import { findFemenineWords, findMasculineWords, getSentenceOfFoundWord } from './wordlist/wordlist';
 import conf from './config/config'
 import FoundWord from './types/FoundWord';
+import Box from '@mui/material/Box';
 
 
 const API_BASE_URL = conf.API_BASE_URL
@@ -70,23 +71,29 @@ function App() {
   }
 
   return (
-    <Container>
-      <Paper sx={{ mx: 8, my: 4, padding: 4, alignContent: "center" }}>
+    <Paper sx={{ mx: 8, my: 4, padding: 4, justifyContent: "center", alignItems: "center", display: "flex", flexDirection: "column" }}>
+      <Container>
         <Typography variant="h2" component="h1" sx={{ mb: 2, }}>📝 Job Ad Gender Decoder ♀️/♂️</Typography>
+        <Typography variant="body2" sx={{ mb: 2 }}>Created by Javier Ubillos</Typography>
+        <Typography variant="body1" sx={{ mb: 2 }}>This tool will help you to write job ads that are welcoming to any gender! </Typography>
+        <Typography variant="body1" sx={{ mb: 2 }}>Paste your job ad text into the box below and click "Get Feedback!" to get started! </Typography>
+      </Container>
+      <Container sx={{ display: "flex", flexDirection: "row" }} >
 
-        <Container>
+        <Box sx={{ flexGrow: 3 }}>
+          <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
+          <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
+          <JobAdFeedback value={jobAdFeedback} />
 
-          <Typography variant="body1" sx={{ mb: 2 }}>This tool will help you to write job ads that are welcoming to any gender! </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>Paste your job ad text into the box below and click "Get Feedback!" to get started! </Typography>
-        </Container>
 
-
-        <JobAdInput value={jobAdInputText} onChange={(s: string) => jobAdInputChanged(s)} />
-        <Button sx={{ marginTop: 2, marginBottom: 4, marginRight: 4 }} variant="contained" onClick={getFeedbackOnJobAd}>Get feedback on Job Ad</Button>
-        <JobAdFeedback value={jobAdFeedback} />
-        <Bias
-          femenineWordsFound={femenineWordsFound} masculineWordsFound={masculineWordsFound}
-        />
+        </Box>
+        <Box sx={{ flexGrow: 1 }}>
+          <Bias
+            femenineWordsFound={femenineWordsFound} masculineWordsFound={masculineWordsFound}
+          />
+        </Box>
+      </Container>
+      <Box sx={{ my: 4 }}>
         <Card sx={{ padding: 2 }}>
           <Typography variant="h6" component="h1">Credit</Typography>
           <Typography variant="body1">The tool is based on the research of Danielle Gaucher, Justin Friesen, and Aaron C. Kay. <br />
@@ -107,8 +114,8 @@ function App() {
             You'll also welcome to <Link href="https://github.com/jav/jobad-gender-decoder">the source of this tool</Link>!
           </Typography>
         </Card>
-      </Paper >
-    </Container >
+      </Box>
+    </Paper>
   );
 }
 
